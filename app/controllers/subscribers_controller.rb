@@ -12,6 +12,19 @@ class SubscribersController < ApplicationController
     save_subscriber or render 'new'
   end
 
+  def destroy
+    begin
+      @gibbon.lists(params[:list_id]).members(params[:id]).delete
+      flash[:success] = "Member unsubscribed."
+    rescue Gibbon::MailChimpError => error
+      flash[:error] = error
+    end
+
+    redirect_to list_path(id: params[:list_id])
+  end
+
+  private
+
   def save_subscriber
     @subscriber = Subscriber.new(params_subscriber)
 
@@ -41,19 +54,6 @@ class SubscribersController < ApplicationController
       false
     end
   end
-
-  def destroy
-    begin
-      @gibbon.lists(params[:list_id]).members(params[:id]).delete
-      flash[:success] = "Member unsubscribed."
-    rescue Gibbon::MailChimpError => error
-      flash[:error] = error
-    end
-
-    redirect_to list_path(id: params[:list_id])
-  end
-
-  private
 
   def params_subscriber
     params.require(:subscriber).permit(:email_address, :fname, :lname, :subscribed)

@@ -1,0 +1,86 @@
+
+<div class="container">
+  <h2>
+    <span>Input New list</span>
+    <%= link_to "Cancel", root_path, class: 'btn btn-warning pull-right' %>
+  </h2>
+  <hr/>
+</div>
+
+<%= form_for @list, url: lists_path, method: :post do |f| %>
+
+  <% if @list.errors.any? %>
+    <div id="error_explanation">
+      <h4><%= pluralize(@list.errors.count, "error") %> prohibited this list from being saved:</h4>
+
+      <ul>
+      <% @list.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.label :company %>
+    <%= f.text_field :company %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.label :address1, "Address" %>
+    <%= f.text_field :address1 %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.label :city %>
+    <%= f.text_field :city %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.label :state %>
+    <%= f.text_field :state %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.label :zip %>
+    <%= f.text_field :zip %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.label :country %>
+    <%= f.text_field :country %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.label :permission_reminder %>
+    <%= f.text_field :permission_reminder %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.label :from_name %>
+    <%= f.text_field :from_name %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.label :from_email %>
+    <%= f.text_field :from_email %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.label :subject %>
+    <%= f.text_field :subject %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.label :language %>
+    <%= f.text_field :language %>
+  </div>
+    
+  <%= f.submit class: "btn btn-primary" %>
+
+<% end %>
