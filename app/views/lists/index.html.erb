@@ -1,0 +1,30 @@
+<h1>Lists</h1>
+
+<div class="table-responsive">
+<table class="table table-striped">
+  <thead>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Company</th>
+    <th>Permission Reminder</th>
+    <th>From Email</th>
+    <th>Date Created</th>
+  </thead>
+  <tbody>
+
+    <% @lists.each do |list| %>
+      <tr>
+        <td><%= list["id"] %></td>
+        <td><%= list["name"] %></td>
+        <td><%= list["contact"]["company"] %></td>
+        <td><%= list["permission_reminder"] %></td>
+        <td><%= list["campaign_defaults"]["from_email"] %></td>
+        <td><%= list["date_created"] %></td>
+        <td><%= link_to "View", list_path(list["id"]) %></td>
+      </tr>
+    <% end %>
+
+  </tbody>
+</table>
+</div>
+

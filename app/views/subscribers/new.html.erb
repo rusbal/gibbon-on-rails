@@ -1,0 +1,48 @@
+
+<%= render 'lists/list' %>
+
+<div class="container">
+  <h2>
+    <span>Input New Subscriber</span>
+    <%= link_to "Cancel", list_path(id: @list_id), class: 'btn btn-warning pull-right' %>
+  </h2>
+  <hr/>
+</div>
+
+<%= form_for @subscriber, url: list_subscribers_path do |f| %>
+
+  <% if @subscriber.errors.any? %>
+    <div id="error_explanation">
+      <h4><%= pluralize(@subscriber.errors.count, "error") %> prohibited this subscriber from being saved:</h4>
+
+      <ul>
+      <% @subscriber.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :email_address, "Email" %>
+    <%= f.text_field :email_address %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.label :fname, "First name" %>
+    <%= f.text_field :fname %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.label :lname, "Last name" %>
+    <%= f.text_field :lname %>
+  </div>
+    
+  <div class="form-group">
+    <%= f.check_box :subscribed %>
+    <%= f.label :subscribed %>
+  </div>
+    
+  <%= f.submit class: "btn btn-primary" %>
+
+<% end %>
