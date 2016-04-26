@@ -15,6 +15,7 @@
     <th>Permission Reminder</th>
     <th>From Email</th>
     <th>Date Created</th>
+    <th colspan="2">Options</th>
   </thead>
   <tbody>
 
@@ -26,7 +27,12 @@
         <td><%= list["permission_reminder"] %></td>
         <td><%= list["campaign_defaults"]["from_email"] %></td>
         <td><%= list["date_created"] %></td>
-        <td><%= link_to "View", list_path(list["id"]) %></td>
+        <td>
+          <%= link_to "View", list_path(list["id"]), class: 'btn btn-info' %>
+        </td>
+        <td>
+          <%= link_to "Delete", list_path(list["id"]), method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>
+        </td>
       </tr>
     <% end %>
 

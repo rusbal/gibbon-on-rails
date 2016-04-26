@@ -17,8 +17,15 @@ class ListsController < ApplicationController
   end
 
   def destroy
-    @list.destroy 
-    redirect_to lists_path
+    begin
+      @gibbon.lists(params[:id]).delete
+      flash[:success] = "List deleted."
+    rescue Gibbon::MailChimpError => error
+      flash[:error] = error
+      false
+    end
+
+    redirect_to root_path
   end
 
   private
