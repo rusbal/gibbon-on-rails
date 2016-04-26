@@ -9,7 +9,7 @@
   <hr/>
 </div>
 
-<%= form_for @subscriber, url: list_subscribers_path do |f| %>
+<%= form_for @subscriber, url: list_subscribers_path, method: :post do |f| %>
 
   <% if @subscriber.errors.any? %>
     <div id="error_explanation">

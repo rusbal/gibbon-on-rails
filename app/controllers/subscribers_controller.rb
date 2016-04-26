@@ -24,22 +24,19 @@ class SubscribersController < ApplicationController
   end
 
   def gibbon_create_subscriber
-
-    subs = params_subscriber
     body = {
-      email_address: subs[:email_address], 
-      status: subs[:subscribed] == "1" ? "subscribed" : "pending", 
+      email_address: @subscriber.email_address,
+      status: @subscriber.subscribed ? "subscribed" : "pending", 
       merge_fields: {
-        FNAME: subs[:fname], 
-        LNAME: subs[:lname]
+        FNAME: @subscriber.fname, 
+        LNAME: @subscriber.lname
       }
     }
 
     begin
       @gibbon.lists(params[:list_id]).members.create(body: body)
-    rescue Gibbon::MailChimpError
-      raise
-      p body
+    rescue Gibbon::MailChimpError => error
+      @subscriber.errors[:base] << error
       false
     end
   end
