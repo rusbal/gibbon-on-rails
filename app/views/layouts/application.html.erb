@@ -41,6 +41,10 @@
     </nav>
 
     <div id="main-container" class="container">
+      <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key == "error" ? "danger" : key %>"><%= value %></div>
+      <% end %>
+
       <%= yield %>
     </div>
 

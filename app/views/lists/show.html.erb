@@ -26,6 +26,7 @@
           <td><%= member["email_address"] %></td>
           <td><%= member["status"] %></td>
           <td><%= member["stats"]["avg_open_rate"] %></td>
+          <td><%= link_to "Unsubscribe", list_subscriber_path(list_id: @list_id, id: member["id"]), method: :delete, class: "btn btn-danger", data: { confirm: "Are you sure?" } %></td>
         </tr>
       <% end %>
     </tbody>

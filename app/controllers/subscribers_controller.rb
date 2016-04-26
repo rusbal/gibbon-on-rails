@@ -9,17 +9,17 @@ class SubscribersController < ApplicationController
   end
 
   def create
-    @subscriber = Subscriber.new(params_subscriber)
-    if @subscriber.save
-      save_subscriber or render 'new'
-    else
-      render 'new'
-    end
+    save_subscriber or render 'new'
   end
 
   def save_subscriber
-    if gibbon_create_subscriber
-      redirect_to list_path(id: params[:list_id])
+    @subscriber = Subscriber.new(params_subscriber)
+
+    # Call to save only validates
+    if @subscriber.save
+      if gibbon_create_subscriber
+        redirect_to list_path(id: params[:list_id])
+      end
     end
   end
 
@@ -35,10 +35,22 @@ class SubscribersController < ApplicationController
 
     begin
       @gibbon.lists(params[:list_id]).members.create(body: body)
+      flash[:success] = "Member subscribed."
     rescue Gibbon::MailChimpError => error
       @subscriber.errors[:base] << error
       false
     end
+  end
+
+  def destroy
+    begin
+      @gibbon.lists(params[:list_id]).members(params[:id]).delete
+      flash[:success] = "Member unsubscribed."
+    rescue Gibbon::MailChimpError => error
+      flash[:error] = error
+    end
+
+    redirect_to list_path(id: params[:list_id])
   end
 
   private
