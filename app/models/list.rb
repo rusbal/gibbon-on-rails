@@ -2,6 +2,7 @@ class List < ActiveType::Object
 
   # this is not backed by a db table
 
+  attribute :id, :integer
   attribute :name, :string
   attribute :company, :string
   attribute :address1, :string

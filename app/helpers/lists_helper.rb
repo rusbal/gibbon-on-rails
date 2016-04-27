@@ -3,4 +3,8 @@ module ListsHelper
     @list_id = params[:list_id] || params[:id]
     @list = @list_id ? @gibbon.lists.send(@list_id).retrieve : {}
   end
+
+  def lists
+    @gibbon.lists.retrieve["lists"]
+  end
 end

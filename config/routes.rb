@@ -4,6 +4,9 @@ Rails.application.routes.draw do
     resources :subscribers
   end
 
+  resources :campaigns
+  resources :templates
+
   root 'lists#index'
 
 end

@@ -2,6 +2,7 @@ class Subscriber < ActiveType::Object
 
   # this is not backed by a db table
 
+  attribute :id, :integer
   attribute :email_address, :string
   attribute :fname, :string
   attribute :lname, :string

@@ -1,0 +1,45 @@
+<div class="container">
+  <h2>Templates</h2>
+  <hr/>
+</div>
+
+<div class="table-responsive">
+<table class="table table-striped">
+  <thead>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Active</th>
+    <th>Thumbnail</th>
+    <th>Created By</th>
+    <th colspan="2">Options</th>
+  </thead>
+  <tbody>
+
+    <% @templates.each do |template| %>
+      <tr>
+        <td><%= template["id"] %></td>
+        <td><%= template["name"] %></td>
+        <td><%= template["active"] %></td>
+        <td><%= link_to (image_tag template["thumbnail"], class: 'template-thumbnail'), template["thumbnail"], :target => "_blank" %></td>
+        <td><%= template["created_by"] %></td>
+        <td>
+          <% if params[:campaign_id] %>
+            <%= link_to "Select", edit_campaign_path(id: params[:campaign_id], template_id: template["id"]), class: 'btn btn-success' %>
+          <% else %>
+            <%= link_to "New Campaign", new_campaign_path(template_id: template["id"]), class: 'btn btn-success' %>
+          <% end %>
+        </td>
+        <td>
+          <% if params[:campaign_id].blank? %>
+            <% if template["type"] == "user" %>
+              <%= link_to "Delete", template_path(template["id"]), method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+
+  </tbody>
+</table>
+</div>
+

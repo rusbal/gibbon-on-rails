@@ -1,0 +1,18 @@
+
+<div class="container">
+  <h2>
+    <span>Input New campaign</span>
+    <%= link_to "Cancel", campaigns_path, class: 'btn btn-warning pull-right' %>
+  </h2>
+  <hr/>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= image_tag @template["thumbnail"], class: 'template-thumbnail-x2' %>
+  </div>
+
+  <div class="col-md-6">
+    <%= render 'form' %>
+  </div>
+</div>

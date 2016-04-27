@@ -1,0 +1,50 @@
+<div class="container">
+  <h2>
+    <span>Campaigns</span>
+    <%= link_to "Add Campaign", new_campaign_path, class: 'btn btn-primary pull-right' %>
+  </h2>
+  <hr/>
+</div>
+
+<div class="table-responsive">
+<table class="table table-striped">
+  <thead>
+    <th>ID</th>
+    <th>Recipient List</th>
+    <th>Status</th>
+    <th>Sent</th>
+    <th>Subject : Title</th>
+    <th>Open Rate</th>
+    <th>Created</th>
+    <th colspan="3">Options</th>
+  </thead>
+  <tbody>
+
+    <% @campaigns.each do |campaign| %>
+      <tr>
+        <td><%= link_to campaign["id"], campaign["archive_url"] %></td>
+        <td><%= campaign["recipients"]["list_id"] %></td>
+        <td><%= campaign["status"] %></td>
+        <td><%= campaign["emails_sent"] %></td>
+        <td><%= campaign["settings"]["subject_line"] + " : " + campaign["settings"]["title"] %></td>
+        <td><%= campaign["send_time"].blank? ? 0 : campaign["report_summary"]["open_rate"].round(2) %></td>
+        <td><%= campaign["create_time"] %></td>
+        <td>
+          <%= link_to "Edit", edit_campaign_path(campaign["id"]), class: 'btn btn-primary' %>
+        </td>
+        <td>
+          <%= link_to "Delete", campaign_path(campaign["id"]), method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>
+        </td>
+        <td>
+          <% if campaign["status"] != "sent" %>
+            <%= link_to "Send", campaign_path(campaign["id"]), class: 'btn btn-success' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+
+  </tbody>
+</table>
+
+</div>
+
