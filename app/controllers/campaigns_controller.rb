@@ -4,7 +4,7 @@ class CampaignsController < ApplicationController
   before_action :clear_edit_session
 
   def index
-    @campaigns = @gibbon.campaigns.retrieve["campaigns"]
+    @campaigns = @gibbon.campaigns.retrieve(params: {count: "30"})["campaigns"]
   end
 
   def show 
@@ -21,6 +21,7 @@ class CampaignsController < ApplicationController
 
   def new 
     @campaign = Campaign.new
+    @campaign.template_id = @template["id"]
   end
 
   def create
@@ -64,9 +65,9 @@ class CampaignsController < ApplicationController
 
   def save_campaign 
     @campaign = Campaign.new(params_campaign)
+    @campaign.template_id = @template["id"]
 
-    # Call to save only validates
-    if @campaign.save
+    if @campaign.valid?
       if gibbon_save_campaign
         redirect_to campaigns_path
       end
@@ -83,8 +84,7 @@ class CampaignsController < ApplicationController
     @campaign.from_name    = p[:from_name]
     @campaign.reply_to     = p[:reply_to]
 
-    # Call to save only validates
-    if @campaign.save
+    if @campaign.valid?
       if gibbon_update_campaign
         redirect_to campaigns_path
       end
@@ -160,14 +160,13 @@ class CampaignsController < ApplicationController
       template_id = id
     end
 
-    if template_id == 0
+    if template_id == 0 || template_id.blank?
       flash[:info] = "Select template to use on campaign."
       redirect_to templates_path(campaign_id: params[:id])
 
     else
       begin
         @template = @gibbon.templates(template_id).retrieve
-        @campaign.template_id = @template["id"]
 
       rescue Gibbon::MailChimpError => error
         flash[:danger] = "Template ID: %s cannot be used." % template_id
