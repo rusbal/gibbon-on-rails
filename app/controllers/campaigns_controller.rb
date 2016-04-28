@@ -1,7 +1,6 @@
 class CampaignsController < ApplicationController
   before_action :load_mailchimp_campaign, only: [:edit, :update]
   before_action :set_template, only: [:new, :create]
-  before_action :clear_edit_session
 
   def index
     @campaigns = @gibbon.campaigns.retrieve(params: {count: "30"})["campaigns"]
@@ -182,10 +181,6 @@ class CampaignsController < ApplicationController
 
   def params_campaign
     params.require(:campaign).permit(:template_id, :list_id, :subject_line, :title, :from_name, :reply_to)
-  end
-
-  def clear_edit_session
-    session.delete(:editing_campaign_id)
   end
 
 end
